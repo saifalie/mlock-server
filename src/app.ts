@@ -4,6 +4,8 @@ import { PORT } from '../secrets';
 import { Server } from 'socket.io';
 import http from 'http';
 import { handleSocketConnection } from './sockets/socket';
+import { errorMiddleware } from './middlewares/errors';
+import { connectDB } from './config/connect';
 
 const app: Express = express();
 
@@ -27,6 +29,29 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 handleSocketConnection(io);
 
-server.listen(PORT, () => {
-    console.log('server is running on the port: ', PORT);
+//Routes
+
+app.get('/saif', (req, res) => {
+    res.send('darling how are you, feeling good !!');
 });
+
+//Middlewares
+app.use(errorMiddleware);
+
+const start = async () => {
+    try {
+        await connectDB()
+            .then(() => {
+                server.listen(PORT, () => {
+                    console.log(`HTTP server is running on port http://localhost:${PORT}`);
+                });
+            })
+            .catch((error) => {
+                console.log('MongoDB connection failed !! ', error);
+            });
+    } catch (error) {
+        console.log('something went wrong while initializing the server and mongodb instance', error);
+    }
+};
+
+start();

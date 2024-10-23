@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
+import { DB_URL } from '../../secrets';
 
-const connectDB = (url: string) => {
-    return mongoose.connect(url);
+export const connectDB = async () => {
+    try {
+        const connectionInstance = await mongoose.connect(`${DB_URL}`);
+        console.log(`\n MongoDB connected !! DB HOST: ${connectionInstance.connection.host}`);
+    } catch (error) {
+        console.log(`MongoDB connection failed error: ${error}`);
+        process.exit(1);
+    }
 };
-
-module.exports = connectDB;
