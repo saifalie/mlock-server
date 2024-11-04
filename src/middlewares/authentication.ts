@@ -6,6 +6,7 @@ import { ACCESS_TOKEN_SECRET } from '../../secrets';
 import { User } from '../models/user.model';
 import { NotFoundException } from '../errors/not-found';
 
+// Custom request interface to include user and socket properties
 interface CustomRequest extends Request {
     user: {
         id: string;
@@ -13,36 +14,48 @@ interface CustomRequest extends Request {
     };
     socket: any;
 }
-
+// Middleware to authenticate the user using JWT
 const auth = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
+
+    // Check if the authorization header exists and starts with 'Bearer'
     if (!authHeader || !authHeader.startsWith('Bearer')) {
         throw new UnauthoirzedException('Unauthorized', ErrorCode.HTTP_UNAUTHORIZED);
     }
 
     const token = authHeader.split(' ')[1];
 
+    // Check if the ACCESS_TOKEN_SECRET is defined
     if (!ACCESS_TOKEN_SECRET) {
-        throw new Error('ACCESS_TOKEN_SECRET is not defined');
+        throw new UnauthoirzedException('ACCESS_TOKEN_SECRET is not defined',ErrorCode.TOKEN_NOT_FOUND);
     }
 
     try {
+        // Verify the token
         const payload = jwt.verify(token, ACCESS_TOKEN_SECRET) as jwt.JwtPayload;
 
+        // Check if the payload is valid and not a string
         if (!payload || typeof payload === 'string') {
             throw new UnauthoirzedException('Authentication Invalid', ErrorCode.HTTP_UNAUTHORIZED);
         }
 
+        // Attach user info to the request object
         req.user = { id: payload.id, full_name: payload.full_name };
+
+        // Attach socket info to the request object
         req.socket = req.io;
 
+        // Find the user in the database
         const user = await User.findById(payload.id);
+
         if (!user) {
             throw new NotFoundException('User not found', ErrorCode.USER_NOT_FOUND);
         }
 
+        // Proceed to the next middleware or route handler
         next();
     } catch (error) {
+        // Handle token verification errors
         throw new UnauthoirzedException('Authentication Invalid', ErrorCode.HTTP_UNAUTHORIZED);
     }
 };
