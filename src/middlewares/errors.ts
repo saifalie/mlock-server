@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpException } from '../errors/root';
 
+// Middleware to handle errors and send structured JSON responses
 export const errorMiddleware = (error: HttpException, req: Request, res: Response, next: NextFunction) => {
+    // Set the response status code from the error object
     res.status(error.statusCode).json({
-        message: error.message,
-        ErrorCode: error.errorCode,
-        errors: error.errors
+        message: error.message, // Provide the error message
+        ErrorCode: error.errorCode, // Include an error code for reference
+        errors: error.errors // Include any additional error details
     });
 };
