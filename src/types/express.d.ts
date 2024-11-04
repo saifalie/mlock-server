@@ -6,10 +6,10 @@ declare module 'express-serve-static-core' {
     }
 }
 
-// declare global {
-//     namespace Express {
-//         interface Request {
-//             io: Server;
-//         }
-//     }
-// }
+declare global {
+    namespace Express{
+        interface Request{
+            user:User
+        }
+    }
+}
