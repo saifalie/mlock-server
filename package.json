@@ -1,28 +1,43 @@
 {
-  "name": "mlock-server",
-  "version": "1.0.0",
-  "description": "server for Mlock-locker service",
-  "main": "app.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.ts",
-    "start": "npx nodemon"
-  },
-  "author": "saif ali shaikh",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "http-status-codes": "^2.3.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.7.2",
-    "socket.io": "^4.8.0",
-    "typescript": "^5.6.3"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.7.8",
-    "nodemon": "^3.1.7",
-    "ts-node": "^10.9.2"
-  }
+    "name": "mlock-server",
+    "version": "1.0.0",
+    "description": "server for Mlock-locker service",
+    "main": "app.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon src/app.ts",
+        "start": "npx nodemon"
+    },
+    "author": "saif ali shaikh",
+    "license": "ISC",
+    "dependencies": {
+        "@adminjs/express": "^6.1.0",
+        "@adminjs/mongoose": "^4.1.0",
+        "adminjs": "^7.8.13",
+        "cloudinary": "^2.5.1",
+        "connect-mongo": "^5.1.0",
+        "dotenv": "^16.4.5",
+        "express": "^4.21.1",
+        "express-formidable": "^1.2.0",
+        "express-session": "^1.18.1",
+        "firebase-admin": "^12.7.0",
+        "http-status-codes": "^2.3.0",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.7.2",
+        "multer": "^1.4.5-lts.1",
+        "socket.io": "^4.8.0",
+        "streamifier": "^0.1.1",
+        "tslib": "^2.8.1",
+        "typescript": "^5.6.3"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.0",
+        "@types/express-session": "^1.18.0",
+        "@types/jsonwebtoken": "^9.0.7",
+        "@types/multer": "^1.4.12",
+        "@types/node": "^22.7.8",
+        "@types/streamifier": "^0.1.2",
+        "nodemon": "^3.1.7",
+        "ts-node": "^10.9.2"
+    }
 }

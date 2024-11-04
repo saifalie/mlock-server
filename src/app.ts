@@ -1,6 +1,6 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
 import { CORS, PORT } from '../secrets';
-
+import dotenv from 'dotenv';
 import { Server } from 'socket.io';
 import http from 'http';
 import { handleSocketConnection } from './sockets/socket';
@@ -8,8 +8,9 @@ import { errorMiddleware } from './middlewares/errors';
 import { connectDB } from './config/connect';
 import { notFoundMiddleware } from './middlewares/not-found';
 import { StatusCodes } from 'http-status-codes';
-import { ApiResponse } from './utils/ApiResponse';
+import { ApiResponse } from './utils/apiResponse';
 
+dotenv.config();
 const app: Express = express();
 
 app.use(express.json());
@@ -47,15 +48,10 @@ app.use(notFoundMiddleware);
 // initializing the DB and server
 const start = async () => {
     try {
-        await connectDB()
-            .then(() => {
-                server.listen(PORT, () => {
-                    console.log(`HTTP server is running on port http://localhost:${PORT}`);
-                });
-            })
-            .catch((error) => {
-                console.log('MongoDB connection failed !! ', error);
-            });
+        await connectDB();
+        server.listen(PORT, () => {
+            console.log(`HTTP server is running on port http://localhost:${PORT}`);
+        });
     } catch (error) {
         console.log('something went wrong while initializing the server and mongodb instance', error);
     }
