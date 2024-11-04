@@ -1,7 +1,21 @@
-import { Schema } from 'mongoose';
+import mongoose, { Date, Document, Schema, Types } from 'mongoose';
 
-const lockerSchema = new Schema({
-    lockerNumber: {
+interface Locker extends Document {
+    locker_number: number;
+    status: string;
+    door_status: string;
+    current_user: Types.ObjectId;
+    size: string;
+    checkin_time: Date;
+    expected_checkout_time: Date;
+    checkout_time: Date;
+    extra_time: number;
+    rental_price: number;
+    history: Types.ObjectId[];
+}
+
+const lockerSchema = new Schema<Locker>({
+    locker_number: {
         type: Number,
         required: true
     },
@@ -10,12 +24,12 @@ const lockerSchema = new Schema({
         enum: ['AVAILABLE', 'BOOKED', 'MAINTENANCE'],
         default: 'AVAILABLE'
     },
-    doorStatus: {
+    door_status: {
         type: String,
         enum: ['OPEN', 'CLOSED'],
         default: 'CLOSED'
     },
-    currentUser: {
+    current_user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
@@ -24,14 +38,19 @@ const lockerSchema = new Schema({
         enum: ['SMALL', 'MEDIUM', 'LARGE'],
         default: 'MEDIUM'
     },
-    checkInTime: {
+    checkin_time: {
         type: Date
     },
-    checkOuTime: {},
-    extraTime: {
+    expected_checkout_time: {
+        type: Date
+    },
+    checkout_time: {
+        type: Date
+    },
+    extra_time: {
         type: Number
     },
-    rentalPrice: {
+    rental_price: {
         type: Number,
         required: true,
         default: 20
@@ -43,3 +62,26 @@ const lockerSchema = new Schema({
         }
     ]
 });
+
+lockerSchema.pre('save', function (next) {
+    switch (this.size) {
+        case 'SMALL':
+            this.rental_price = 0.3;
+            break;
+
+        case 'MEDIUM':
+            this.rental_price = 0.5;
+            break;
+
+        case 'LARGE':
+            this.rental_price = 0.8;
+            break;
+
+        default:
+            this.rental_price = 0.5;
+    }
+
+    next();
+});
+
+export const Locker = mongoose.model<Locker>('Locker', lockerSchema);
