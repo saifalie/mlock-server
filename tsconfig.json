@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
+        "target": "ES2020",
         "module": "NodeNext",
         "typeRoots": ["./src/types", "./node_modules/@types"],
         "esModuleInterop": true,
@@ -16,9 +16,16 @@
         "strictBindCallApply": true,
         "strictPropertyInitialization": true,
         "alwaysStrict": true,
-        "useUnknownInCatchVariables": true
+        "useUnknownInCatchVariables": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "resolveJsonModule": true
     },
-    "include": ["src"]
+    "ts-node": {
+        "esm": true,
+        "experimentalSpecifierResolution": "node"
+    },
+    "include": ["src/**/*"]
 }
 // {
 //     "compilerOptions": {
