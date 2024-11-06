@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
-import { BadRequestException } from '../../errors/bad-request';
-import { ErrorCode } from '../../errors/root';
+import { BadRequestException } from '../../errors/bad-request.js';
+import { ErrorCode } from '../../errors/root.js';
 import * as jwt from 'jsonwebtoken';
-import { REFRESH_TOKEN_SECRET } from '../../../secrets';
-import { User } from '../../models/user.model';
-import { NotFoundException } from '../../errors/not-found';
+import { REFRESH_TOKEN_SECRET } from '../../../secrets.js';
+import { User } from '../../models/user.model.js';
+import { NotFoundException } from '../../errors/not-found.js';
 import { StatusCodes } from 'http-status-codes';
-import { ApiResponse } from '../../utils/apiResponse';
-import { UnauthoirzedException } from '../../errors/unauthorized';
-import admin from '../../config/firebase';
-import { InternalException } from '../../errors/internal-exception';
+import { ApiResponse } from '../../utils/apiResponse.js';
+import { UnauthoirzedException } from '../../errors/unauthorized.js';
+import admin from '../../config/firebase.js';
+import { InternalException } from '../../errors/internal-exception.js';
 
 const signInWithGoogle = async (req: Request, res: Response) => {
     const { name, profile_picture, id_token } = req.body;

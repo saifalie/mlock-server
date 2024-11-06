@@ -6,12 +6,16 @@ export class HttpException extends Error {
     statusCode: StatusCodes;
     errors: any;
 
-    constructor(message: string, errorCode: ErrorCode, statusCode: StatusCodes, errors: any) {
+    constructor(message: string, errorCode: ErrorCode, statusCode: StatusCodes, errors: any = null) {
         super(message);
         this.message = message;
         this.errorCode = errorCode;
         this.statusCode = statusCode;
         this.errors = errors;
+
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
     }
 }
 

@@ -17,7 +17,8 @@ interface Locker extends Document {
 const lockerSchema = new Schema<Locker>({
     locker_number: {
         type: Number,
-        required: true
+        required: true,
+        unique: false
     },
     status: {
         type: String,
@@ -54,13 +55,13 @@ const lockerSchema = new Schema<Locker>({
         type: Number,
         required: true,
         default: 20
-    },
-    history: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Booking'
-        }
-    ]
+    }
+    // history: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: 'Booking'
+    //     }
+    // ]
 });
 
 lockerSchema.pre('save', function (next) {

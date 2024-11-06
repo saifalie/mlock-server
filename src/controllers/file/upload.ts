@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import { BadRequestException } from '../../errors/bad-request';
-import { ErrorCode } from '../../errors/root';
-import { InternalException } from '../../errors/internal-exception';
-import cloudinary from '../../config/cloudinary';
+import { BadRequestException } from '../../errors/bad-request.js';
+import { ErrorCode } from '../../errors/root.js';
+import { InternalException } from '../../errors/internal-exception.js';
+import cloudinary from '../../config/cloudinary.js';
 import { Transform } from 'stream';
 import streamifier from 'streamifier';
 import { StatusCodes } from 'http-status-codes';
-import { ApiResponse } from '../../utils/apiResponse';
+import { ApiResponse } from '../../utils/apiResponse.js';
 
 export const uploadMedia = async (req: Request, res: Response) => {
     if (!req.file || !req.file.size) {

@@ -1,8 +1,8 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
-import { ACCESS_TOKEN_EXPIRY, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_EXPIRY, REFRESH_TOKEN_SECRET } from '../../secrets';
-import { InternalException } from '../errors/internal-exception';
-import { ErrorCode } from '../errors/root';
+import { ACCESS_TOKEN_EXPIRY, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_EXPIRY, REFRESH_TOKEN_SECRET } from '../../secrets.js';
+import { InternalException } from '../errors/internal-exception.js';
+import { ErrorCode } from '../errors/root.js';
 
 // Define the User interface extending Mongoose Document
 interface User extends Document {
@@ -49,13 +49,13 @@ const userSchema = new Schema<User>({
             type: Schema.Types.ObjectId,
             ref: 'LockerStation'
         }
-    ],
-    history: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Booking'
-        }
     ]
+    // history: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: 'Booking'
+    //     }
+    // ]
 });
 
 // Implement the createAccessToken method
