@@ -1,24 +1,28 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
-import { CORS, PORT } from '../secrets';
+import { CORS, PORT } from '../secrets.js';
 import dotenv from 'dotenv';
 import { Server } from 'socket.io';
 import http from 'http';
-import { handleSocketConnection } from './sockets/socket';
-import { errorMiddleware } from './middlewares/errors';
-import { connectDB } from './config/connect';
-import { notFoundMiddleware } from './middlewares/not-found';
+import { handleSocketConnection } from './sockets/socket.js';
+import { errorMiddleware } from './middlewares/errors.js';
+import { connectDB } from './config/connect.js';
+import { notFoundMiddleware } from './middlewares/not-found.js';
 import { StatusCodes } from 'http-status-codes';
-import { ApiResponse } from './utils/apiResponse';
+import { ApiResponse } from './utils/apiResponse.js';
+
+import { buildAdminRouter } from './config/setup.js';
+import { Locker } from './models/locker.model.js';
 
 dotenv.config();
-const app: Express = express();
 
+// Initialize express app
+const app: Express = express();
 app.use(express.json());
 
 // server instance
 const server = http.createServer(app);
 
-// io instance
+// io instance (WebSocket)
 const io = new Server(server, {
     cors: {
         origin: `${CORS}`
@@ -32,29 +36,33 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Initialize the websocket handling logic
-
 handleSocketConnection(io);
 
-//Routes
+// Use the admin router
+buildAdminRouter(app);
 
-app.get('/saif', (req, res) => {
-    res.status(StatusCodes.OK).json(new ApiResponse(StatusCodes.OK, { data: 'data' }, 'data is there'));
+// Routes
+app.get('/saif', async (req, res) => {
+    const data = await Locker.find({});
+
+    res.status(StatusCodes.OK).json(new ApiResponse(StatusCodes.OK, data, 'data is there'));
 });
 
-//Middlewares
-app.use(errorMiddleware);
+// Middlewares
+// app.use(errorMiddleware);
 app.use(notFoundMiddleware);
 
-// initializing the DB and server
-const start = async () => {
+// Start the server and connect to MongoDB
+const startServer = async () => {
     try {
         await connectDB();
         server.listen(PORT, () => {
-            console.log(`HTTP server is running on port http://localhost:${PORT}`);
+            console.log(`HTTP server is running on http://localhost:${PORT}`);
+            // console.log(`AdminJS server is running on http://localhost:${PORT}${admin.options.rootPath}`);
         });
     } catch (error) {
-        console.log('something went wrong while initializing the server and mongodb instance', error);
+        console.log('Something went wrong while initializing the server and MongoDB instance:', error);
     }
 };
 
-start();
+startServer();
