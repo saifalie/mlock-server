@@ -1,27 +1,29 @@
 import 'dotenv/config';
-import mongoose from 'mongoose';
 import session from 'express-session';
-import connectMongo from 'connect-mongo';
+import connectMongo from 'connect-mongodb-session';
 
-// Create a new MongoStore instance using the create method
-const MongoStore = new connectMongo(session);
 
-export const sessionStore = MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,
-    collectionName: 'sessions'
+import { DB_URL } from '../../secrets.js';
+
+const MongoDBStore = connectMongo(session);
+
+// MongoDB session store configuration
+export const sessionStore = new MongoDBStore({
+    uri: DB_URL as string,
+    collection: 'sessions'
 });
 
-sessionStore.on('error', (error: any) => {
+sessionStore.on('error', (error) => {
     console.log('Session store error', error);
 });
 
+// Authentication function
 export const authenticate = async (email: string, password: string) => {
+    let user = null;
+
     if (email === 'saifalie14@gmail.com' && password === '1234') {
         return Promise.resolve({ email: email, password: password });
     } else {
         return null;
     }
 };
-
-export const PORT = process.env.PORT || 7000;
-export const COOKIE_PASSWORD = process.env.COOKIE_PASSWORD!;
