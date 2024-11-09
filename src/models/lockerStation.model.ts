@@ -14,10 +14,10 @@ interface LockerStation extends Document {
     station_name: string;
     status: 'OPEN' | 'CLOSED' | 'MAINTENANCE';
     location: {
-        latitude: number;
-        longitude: number;
-        address: string;
+        type: string;
+        coordinates: [];
     };
+    address: string;
     images: { url: string }[];
     ratings: Types.ObjectId[];
     reviews: Types.ObjectId[];
@@ -28,6 +28,7 @@ interface LockerStation extends Document {
         closes_at: string;
         is_closed: boolean;
     }[];
+    markedFavourite: Types.ObjectId[];
 }
 
 const LockerStationSchema = new Schema<LockerStation>(
@@ -43,19 +44,10 @@ const LockerStationSchema = new Schema<LockerStation>(
             default: 'CLOSED'
         },
         location: {
-            latitude: {
-                type: Number,
-                required: true
-            },
-            longitude: {
-                type: Number,
-                required: true
-            },
-            address: {
-                type: String,
-                required: true
-            }
+            type: { type: String, required: true },
+            coordinates: []
         },
+        address: { type: String, required: true },
 
         images: [
             {
@@ -103,6 +95,12 @@ const LockerStationSchema = new Schema<LockerStation>(
                     type: Boolean,
                     default: false
                 }
+            }
+        ],
+        markedFavourite: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
             }
         ]
     },
