@@ -10,9 +10,9 @@ interface User extends Document {
     email: string;
     current_locker?: Types.ObjectId;
     profile_picture: string;
-    location?: {
-        latitude?: number;
-        longitude?: number;
+    location: {
+        type: string;
+        coordinates: [];
     };
     favourite: Types.ObjectId[];
     history: Types.ObjectId[];
@@ -39,10 +39,8 @@ const userSchema = new Schema<User>({
         ref: 'Locker'
     },
     location: {
-        latitude: {
-            type: Number
-        },
-        longitude: { type: Number }
+        type: { type: String, required: true },
+        coordinates: []
     },
     favourite: [
         {
