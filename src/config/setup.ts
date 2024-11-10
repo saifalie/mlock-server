@@ -4,7 +4,7 @@ import * as AdminJSMongoose from '@adminjs/mongoose';
 import * as Models from '../models/index.js';
 import { dark, light, noSidebar } from '@adminjs/themes';
 import express, { Request, Response, NextFunction } from 'express';
-import { COOKIE_PASSWORD } from '../../secrets.js'; 
+import { COOKIE_PASSWORD } from '../../secrets.js';
 import session from 'express-session';
 import connectMongo from 'connect-mongodb-session';
 
@@ -18,7 +18,9 @@ export const admin = new AdminJS({
         { resource: Models.Locker },
         { resource: Models.LockerStation },
         { resource: Models.Rating },
-        { resource: Models.Review }
+        { resource: Models.Review },
+        { resource: Models.Payment },
+        { resource: Models.Booking }
     ],
     branding: {
         companyName: 'MLock',
