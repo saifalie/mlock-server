@@ -55,14 +55,14 @@ const lockerSchema = new Schema<Locker>({
         type: Number,
         required: true,
         default: 20
-    }
-    // history: [
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         ref: 'Booking'
-    //     }
-    // ]
-});
+    },
+    history: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Booking'
+        }
+    ]
+},{timestamps:true});
 
 lockerSchema.pre('save', function (next) {
     switch (this.size) {
