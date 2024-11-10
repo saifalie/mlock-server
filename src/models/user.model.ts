@@ -21,40 +21,43 @@ interface User extends Document {
 }
 
 // Define the user schema
-const userSchema = new Schema<User>({
-    name: {
-        type: String,
-        required: [true, 'Name is required']
-    },
-    email: {
-        type: String,
-        required: [true, 'Email is required'],
-        unique: true
-    },
-    profile_picture: {
-        type: String
-    },
-    current_locker: {
-        type: Schema.Types.ObjectId,
-        ref: 'Locker'
-    },
-    location: {
-        type: { type: String, required: true },
-        coordinates: []
-    },
-    favourite: [
-        {
+const userSchema = new Schema<User>(
+    {
+        name: {
+            type: String,
+            required: [true, 'Name is required']
+        },
+        email: {
+            type: String,
+            required: [true, 'Email is required'],
+            unique: true
+        },
+        profile_picture: {
+            type: String
+        },
+        current_locker: {
             type: Schema.Types.ObjectId,
-            ref: 'LockerStation'
-        }
-    ]
-    // history: [
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         ref: 'Booking'
-    //     }
-    // ]
-});
+            ref: 'Locker'
+        },
+        location: {
+            type: { type: String, required: true },
+            coordinates: []
+        },
+        favourite: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'LockerStation'
+            }
+        ],
+        history: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Booking'
+            }
+        ]
+    },
+    { timestamps: true }
+);
 
 // Implement the createAccessToken method
 userSchema.methods.createAccessToken = function () {
