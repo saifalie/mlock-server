@@ -12,12 +12,15 @@ import { ApiResponse } from './utils/apiResponse.js';
 
 import { buildAdminRouter } from './config/setup.js';
 import { Locker } from './models/locker.model.js';
+import rootRouter from './routes/index.routes.js';
+import helmet from 'helmet';
 
 dotenv.config();
 
 // Initialize express app
 const app: Express = express();
 app.use(express.json());
+app.use(helmet());
 
 // server instance
 const server = http.createServer(app);
@@ -41,15 +44,11 @@ handleSocketConnection(io);
 // Use the admin router
 buildAdminRouter(app);
 
-// Routes
-app.get('/saif', async (req, res) => {
-    const data = await Locker.find({});
-
-    res.status(StatusCodes.OK).json(new ApiResponse(StatusCodes.OK, data, 'data is there'));
-});
+// routes
+app.use('/api', rootRouter);
 
 // Middlewares
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 app.use(notFoundMiddleware);
 
 // Start the server and connect to MongoDB
