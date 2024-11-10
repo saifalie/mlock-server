@@ -15,3 +15,5 @@ export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 export const COOKIE_PASSWORD = process.env.COOKIE_PASSWORD;
+export const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID;
+export const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
