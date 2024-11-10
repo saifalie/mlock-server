@@ -27,10 +27,12 @@
         "express-formidable": "^1.2.0",
         "express-session": "^1.18.1",
         "firebase-admin": "^12.7.0",
+        "helmet": "^8.0.0",
         "http-status-codes": "^2.3.0",
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.7.2",
         "multer": "^1.4.5-lts.1",
+        "razorpay": "^2.9.5",
         "socket.io": "^4.8.0",
         "streamifier": "^0.1.1",
         "tslib": "^2.8.1"
