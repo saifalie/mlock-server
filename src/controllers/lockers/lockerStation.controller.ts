@@ -24,7 +24,7 @@ export const getAllLockerStations = async (req: Request, res: Response) => {
     }
 };
 export const getLockerStationNearMe = async (req: Request, res: Response) => {
-    const { longitude, latitude } = req.body;
+    const { longitude, latitude } = req.query;
     try {
         const lockerStations = await LockerStation.find({
             location: {
@@ -33,7 +33,8 @@ export const getLockerStationNearMe = async (req: Request, res: Response) => {
                 }
             }
         });
-        console.log(new Date());
+        console.log(lockerStations);
+        
 
         return res.status(StatusCodes.OK).json(new ApiResponse(StatusCodes.OK, lockerStations, 'success'));
     } catch (error) {
