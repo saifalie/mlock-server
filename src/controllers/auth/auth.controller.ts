@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { BadRequestException } from '../../errors/bad-request.js';
 import { ErrorCode } from '../../errors/root.js';
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { REFRESH_TOKEN_SECRET } from '../../../secrets.js';
 import { User } from '../../models/user.model.js';
 import { NotFoundException } from '../../errors/not-found.js';
@@ -11,8 +11,11 @@ import { UnauthoirzedException } from '../../errors/unauthorized.js';
 import admin from '../../config/firebase.js';
 import { InternalException } from '../../errors/internal-exception.js';
 
-const signInWithGoogle = async (req: Request, res: Response) => {
+export const signInWithGoogle = async (req: Request, res: Response) => {
     const { name, profile_picture, id_token } = req.body;
+    console.log(id_token);
+
+    console.log('got the signin request');
 
     if (!id_token) {
         throw new BadRequestException('ID token is required', ErrorCode.TOKEN_NOT_FOUND);
@@ -30,8 +33,13 @@ const signInWithGoogle = async (req: Request, res: Response) => {
         let user = await User.findOne({ email: verifiedEmail });
 
         if (user) {
+            console.log('user is there');
+
             const new_access_token = user.createAccessToken() as string;
             const new_refresh_token = user.createRefreshToken() as string;
+
+            console.log('access', new_access_token);
+            console.log('refresh', new_refresh_token);
 
             return res.status(StatusCodes.OK).json(
                 new ApiResponse(
@@ -59,8 +67,8 @@ const signInWithGoogle = async (req: Request, res: Response) => {
 
         user = new User({
             email: verifiedEmail,
-            name,
-            profile_picture
+            name: name || 'saif',
+            profile_picture: profile_picture || 'profilePicture'
         });
 
         await user.save();
