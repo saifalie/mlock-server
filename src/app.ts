@@ -20,7 +20,7 @@ dotenv.config();
 // Initialize express app
 const app: Express = express();
 app.use(express.json());
-app.use(helmet());
+// app.use(helmet());
 
 // server instance
 const server = http.createServer(app);
