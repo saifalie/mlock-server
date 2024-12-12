@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { ACCESS_TOKEN_EXPIRY, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_EXPIRY, REFRESH_TOKEN_SECRET } from '../../secrets.js';
 import { InternalException } from '../errors/internal-exception.js';
 import { ErrorCode } from '../errors/root.js';
@@ -40,7 +40,7 @@ const userSchema = new Schema<User>(
             ref: 'Locker'
         },
         location: {
-            type: { type: String, required: true },
+            type: { type: String, required: false },
             coordinates: []
         },
         favourite: [
