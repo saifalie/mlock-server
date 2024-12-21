@@ -1,5 +1,4 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
-import { CORS, PORT } from '../secrets.js';
 import dotenv from 'dotenv';
 import { Server } from 'socket.io';
 import http from 'http';
@@ -9,7 +8,6 @@ import { connectDB } from './config/connect.js';
 import { notFoundMiddleware } from './middlewares/not-found.js';
 import { StatusCodes } from 'http-status-codes';
 import { ApiResponse } from './utils/apiResponse.js';
-
 import { buildAdminRouter } from './config/setup.js';
 import { Locker } from './models/locker.model.js';
 import rootRouter from './routes/index.routes.js';
@@ -28,7 +26,7 @@ const server = http.createServer(app);
 // io instance (WebSocket)
 const io = new Server(server, {
     cors: {
-        origin: `${CORS}`
+        origin: `${process.env.CORS}`
     }
 });
 
@@ -55,9 +53,10 @@ app.use(notFoundMiddleware);
 const startServer = async () => {
     try {
         await connectDB();
-        server.listen(PORT, () => {
-            console.log(`HTTP server is running on http://localhost:${PORT}`);
-            // console.log(`AdminJS server is running on http://localhost:${PORT}${admin.options.rootPath}`);
+        const port = process.env.PORT || 3000; // Use the PORT environment variable or default to 3000
+        server.listen(port, () => {
+            console.log(`HTTP server is running on http://localhost:${port}`);
+            // console.log(`AdminJS server is running on http://localhost:${port}${admin.options.rootPath}`);
         });
     } catch (error) {
         console.log('Something went wrong while initializing the server and MongoDB instance:', error);

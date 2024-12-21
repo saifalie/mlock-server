@@ -1,5 +1,4 @@
 import express from 'express';
-import { CORS, PORT } from '../secrets.js';
 import dotenv from 'dotenv';
 import { Server } from 'socket.io';
 import http from 'http';
@@ -19,7 +18,7 @@ const server = http.createServer(app);
 // io instance (WebSocket)
 const io = new Server(server, {
     cors: {
-        origin: `${CORS}`
+        origin: `${process.env.CORS}`
     }
 });
 // Attach the websocket instance to the request object
@@ -40,9 +39,10 @@ app.use(notFoundMiddleware);
 const startServer = async () => {
     try {
         await connectDB();
-        server.listen(PORT, () => {
-            console.log(`HTTP server is running on http://localhost:${PORT}`);
-            // console.log(`AdminJS server is running on http://localhost:${PORT}${admin.options.rootPath}`);
+        const port = process.env.PORT || 3000; // Use the PORT environment variable or default to 3000
+        server.listen(port, () => {
+            console.log(`HTTP server is running on http://localhost:${port}`);
+            // console.log(`AdminJS server is running on http://localhost:${port}${admin.options.rootPath}`);
         });
     }
     catch (error) {
