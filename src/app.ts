@@ -53,7 +53,7 @@ app.use(notFoundMiddleware);
 
 // Start the server and connect to MongoDB
 
-const PORT = process.env.PORT || 7000
+const PORT = process.env.PORT || 7000;
 const startServer = async () => {
     try {
         await connectDB();
