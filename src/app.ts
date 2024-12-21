@@ -17,16 +17,20 @@ dotenv.config();
 
 // Initialize express app
 const app: Express = express();
+app.enable('trust proxy');
 app.use(express.json());
-// app.use(helmet());
+app.use(helmet());
 
 // server instance
 const server = http.createServer(app);
 
 // io instance (WebSocket)
+const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.CORS : 'http://localhost:3000';
+
 const io = new Server(server, {
     cors: {
-        origin: `${process.env.CORS}`
+        origin: corsOrigin,
+        methods: ['GET', 'POST']
     }
 });
 
@@ -53,14 +57,33 @@ app.use(notFoundMiddleware);
 const startServer = async () => {
     try {
         await connectDB();
-        const port = process.env.PORT || 3000; // Use the PORT environment variable or default to 3000
-        server.listen(port, () => {
-            console.log(`HTTP server is running on http://localhost:${port}`);
-            // console.log(`AdminJS server is running on http://localhost:${port}${admin.options.rootPath}`);
-        });
+        const port = Number(process.env.PORT) || 3000; // Convert to number
+
+        server.listen(
+            {
+                port: port,
+                host: '0.0.0.0'
+            },
+            () => {
+                console.log(`Server running on port ${port}`);
+            }
+        );
     } catch (error) {
-        console.log('Something went wrong while initializing the server and MongoDB instance:', error);
+        console.error('Server initialization error:', error);
+        process.exit(1);
     }
 };
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+    process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection:', err);
+    process.exit(1);
+});
 
 startServer();
