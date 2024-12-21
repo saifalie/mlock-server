@@ -1,5 +1,5 @@
 import express, { Request, Response, Express, NextFunction } from 'express';
-
+import { CORS, PORT } from '../secrets.js';
 import dotenv from 'dotenv';
 import { Server } from 'socket.io';
 import http from 'http';
@@ -28,7 +28,7 @@ const server = http.createServer(app);
 // io instance (WebSocket)
 const io = new Server(server, {
     cors: {
-        origin: `${process.env.CORS}`
+        origin: `${CORS}`
     }
 });
 
@@ -52,8 +52,6 @@ app.use(errorMiddleware);
 app.use(notFoundMiddleware);
 
 // Start the server and connect to MongoDB
-
-const PORT = process.env.PORT || 7000;
 const startServer = async () => {
     try {
         await connectDB();
