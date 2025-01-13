@@ -31,7 +31,7 @@ export const admin = new AdminJS({
 const MongoDBStore = connectMongo(session);
 // Set up the session store with MongoDB
 const sessionStore = new MongoDBStore({
-    uri: process.env.MONGO_URI,
+    uri: process.env.DB_URL,
     collection: 'sessions'
 });
 sessionStore.on('error', function (error) {
