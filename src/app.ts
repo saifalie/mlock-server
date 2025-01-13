@@ -18,12 +18,12 @@ dotenv.config();
 
 // Initialize express app
 const app: Express = express();
-app.enable('trust proxy');
-app.use(express.json());
-app.use(helmet());
-app.use(cors({
-    origin:'*'
-}))
+// app.enable('trust proxy');
+// app.use(express.json());
+// app.use(helmet());
+// app.use(cors({
+//     origin:'*'
+// }))
 
 // server instance
 const server = http.createServer(app);

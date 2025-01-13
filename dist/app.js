@@ -8,17 +8,15 @@ import { connectDB } from './config/connect.js';
 import { notFoundMiddleware } from './middlewares/not-found.js';
 import { buildAdminRouter } from './config/setup.js';
 import rootRouter from './routes/index.routes.js';
-import helmet from 'helmet';
-import cors from 'cors';
 dotenv.config();
 // Initialize express app
 const app = express();
-app.enable('trust proxy');
-app.use(express.json());
-app.use(helmet());
-app.use(cors({
-    origin: '*'
-}));
+// app.enable('trust proxy');
+// app.use(express.json());
+// app.use(helmet());
+// app.use(cors({
+//     origin:'*'
+// }))
 // server instance
 const server = http.createServer(app);
 // io instance (WebSocket)
