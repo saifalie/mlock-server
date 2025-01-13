@@ -4,7 +4,7 @@ import razorpay from '../../config/razopay.js';
 import { StatusCodes } from 'http-status-codes';
 import { ApiResponse } from '../../utils/apiResponse.js';
 import { Booking, PaymentStatus } from '../../models/booking.model.js';
-import { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } from '../../../secrets.js';
+import { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } from '../../secrets.js';
 import { Payment } from '../../models/payment.model.js';
 import * as crypto from 'crypto';
 import { InternalException } from '../../errors/internal-exception.js';

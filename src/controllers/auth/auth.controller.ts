@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { BadRequestException } from '../../errors/bad-request.js';
 import { ErrorCode } from '../../errors/root.js';
 import jwt from 'jsonwebtoken';
-import { REFRESH_TOKEN_SECRET } from '../../../secrets.js';
+import { REFRESH_TOKEN_SECRET } from '../../secrets.js';
 import { User } from '../../models/user.model.js';
 import { NotFoundException } from '../../errors/not-found.js';
 import { StatusCodes } from 'http-status-codes';

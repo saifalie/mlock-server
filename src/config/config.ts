@@ -3,7 +3,7 @@ import session from 'express-session';
 import connectMongo from 'connect-mongodb-session';
 
 
-import { DB_URL } from '../../secrets.js';
+import { DB_URL } from '../secrets.js';
 
 const MongoDBStore = connectMongo(session);
 

@@ -1,5 +1,5 @@
 import Razorpay from 'razorpay';
-import { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } from '../../secrets.js';
+import { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } from '../secrets.js';
 import { InternalException } from '../errors/internal-exception.js';
 import { ErrorCode } from '../errors/root.js';
 

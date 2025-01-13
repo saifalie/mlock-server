@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { UnauthoirzedException } from '../errors/unauthorized.js';
 import { ErrorCode } from '../errors/root.js';
 import * as jwt from 'jsonwebtoken';
-import { ACCESS_TOKEN_SECRET } from '../../secrets.js';
+import { ACCESS_TOKEN_SECRET } from '../secrets.js';
 import { User } from '../models/user.model.js';
 import { NotFoundException } from '../errors/not-found.js';
 

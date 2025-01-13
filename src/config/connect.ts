@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { DB_URL } from '../../secrets.js';
+import { DB_URL } from '../secrets.js';
 
 // Function to establish a connection to the MongoDB database
 export const connectDB = async () => {
