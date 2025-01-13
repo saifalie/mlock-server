@@ -66,7 +66,7 @@ const startServer = async () => {
         server.listen(
             {
                 port: port,
-                host: '0.0.0.0' // This is correct
+          
             },
             () => {
                 console.log(`Server running on port ${port}`);
