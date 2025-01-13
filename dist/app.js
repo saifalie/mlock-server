@@ -48,7 +48,7 @@ const startServer = async () => {
     try {
         await connectDB();
         const port = Number(process.env.PORT) || 3000; // Convert to number
-        server.listen(port, '0.0.0.0', () => {
+        server.listen(port, () => {
             console.log(`Server running on port ${port}`);
         });
     }
