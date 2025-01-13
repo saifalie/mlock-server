@@ -12,6 +12,7 @@ import { buildAdminRouter } from './config/setup.js';
 import { Locker } from './models/locker.model.js';
 import rootRouter from './routes/index.routes.js';
 import helmet from 'helmet';
+import cors from 'cors'
 
 dotenv.config();
 
@@ -20,6 +21,9 @@ const app: Express = express();
 app.enable('trust proxy');
 app.use(express.json());
 app.use(helmet());
+app.use(cors({
+    origin:'*'
+}))
 
 // server instance
 const server = http.createServer(app);
@@ -62,7 +66,7 @@ const startServer = async () => {
         server.listen(
             {
                 port: port,
-                host:'0.0.0.0'
+                host: '0.0.0.0' // This is correct
             },
             () => {
                 console.log(`Server running on port ${port}`);

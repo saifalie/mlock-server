@@ -9,12 +9,16 @@ import { notFoundMiddleware } from './middlewares/not-found.js';
 import { buildAdminRouter } from './config/setup.js';
 import rootRouter from './routes/index.routes.js';
 import helmet from 'helmet';
+import cors from 'cors';
 dotenv.config();
 // Initialize express app
 const app = express();
 app.enable('trust proxy');
 app.use(express.json());
 app.use(helmet());
+app.use(cors({
+    origin: '*'
+}));
 // server instance
 const server = http.createServer(app);
 // io instance (WebSocket)
@@ -46,7 +50,7 @@ const startServer = async () => {
         const port = Number(process.env.PORT) || 3000; // Convert to number
         server.listen({
             port: port,
-            host: '0.0.0.0'
+            host: '0.0.0.0' // This is correct
         }, () => {
             console.log(`Server running on port ${port}`);
         });
