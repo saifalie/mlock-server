@@ -29,7 +29,7 @@ const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.CORS : 'h
 
 const io = new Server(server, {
     cors: {
-        origin: corsOrigin,
+        origin: '*',
         methods: ['GET', 'POST']
     }
 });
